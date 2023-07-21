@@ -9,7 +9,15 @@ them together in a heatmap.
 ./script/plot_heatmap.sh -p 10 TP53
 ```
 
-![](TP53.png)
+![](TP53_top100.png)
+
+Top 20 more correlated.
+
+```console
+./script/plot_heatmap.sh -p 10 -n 20 TP53
+```
+
+![](TP53_top20.png)
 
 ## Usage
 

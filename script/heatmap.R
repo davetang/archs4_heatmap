@@ -4,7 +4,7 @@
 # Year 2023
 #
 
-script_ver <- '0.0.1'
+script_ver <- '0.0.2'
 
 suppressPackageStartupMessages(library(optparse))
 suppressPackageStartupMessages(library(pheatmap))
@@ -16,7 +16,9 @@ option_list <- list(
    make_option(c("-v", "--version"), action = "store_true", help =
                "Show script version and exit"),
    make_option(c("-o", "--out"), default = "heatmap.png",
-               help = "Output file name (default = %default)")
+               help = "Heatmap file name (default = %default)"),
+   make_option(c("-m", "--matrix"), default = "matrix.csv",
+               help = "Matrix file name (default = %default)")
 )
 
 # create your own usage
@@ -77,6 +79,7 @@ my_df |>
 my_mat <- as.matrix(my_df_wide[, -1])
 row.names(my_mat) <- my_df_wide$gene
 my_order <- colnames(my_mat)
+write.csv(my_mat, file = opt$options$matrix, quote = FALSE)
 
 my_df |>
   dplyr::select(system, tissue) |>
@@ -87,8 +90,8 @@ row.names(sample_anno) <- my_order
 
 p <- pheatmap(my_mat, annotation_col = sample_anno, silent = TRUE)
 
-my_width  <- 50 * nrow(my_mat)
-my_height <- 40 * nrow(my_mat)
+my_width  <- 700 * sqrt(nrow(my_mat))
+my_height <- 400 * sqrt(nrow(my_mat))
 
 save_pheatmap_png <- function(x, filename, width=my_width, height=my_height, res = 300){
    png(filename, width = width, height = height, res = res)

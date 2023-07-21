@@ -15,7 +15,7 @@ max_procs=8
 tmp_dir=/tmp
 species=human
 num_genes=100
-version=0.0.1
+version=0.0.2
 keep=0
 
 usage(){
@@ -47,13 +47,13 @@ eval set -- ${args}
 while :
 do
   case $1 in
-    -h | --help) usage  ; shift   ;;
-    -v | --version) print_ver  ; shift   ;;
-    -k | --keep) keep=1  ; shift   ;;
-    -p | --max-procs) max_procs=$2   ; shift 2 ;;
-    -s | --species)   species=$2     ; shift 2 ;;
-    -n | --num-genes) num_genes=$2   ; shift 2 ;;
-    -t | --tmp-dir)   tmp_dir=$2     ; shift 2 ;;
+    -h | --help)      usage        ; shift   ;;
+    -v | --version)   print_ver    ; shift   ;;
+    -k | --keep)      keep=1       ; shift   ;;
+    -p | --max-procs) max_procs=$2 ; shift 2 ;;
+    -s | --species)   species=$2   ; shift 2 ;;
+    -n | --num-genes) num_genes=$2 ; shift 2 ;;
+    -t | --tmp-dir)   tmp_dir=$2   ; shift 2 ;;
     --) shift; break ;;
     *) >&2 echo Unsupported option: $1
        usage ;;
@@ -84,7 +84,7 @@ done \
    -P ${max_procs} \
    bash -c "gget archs4 -s ${species} --csv -w tissue {} > ${out_dir}/{}.csv"
 
-${script_dir}/heatmap.R -o ${gene}.png ${out_dir}
+${script_dir}/heatmap.R -m ${gene}_top${num_genes}.csv -o ${gene}_top${num_genes}.png ${out_dir}
 
 if [[ ${keep} == 0 ]]; then
    rm -rf ${out_dir}
