@@ -1,3 +1,12 @@
+## Table of Contents
+
+- [Gene heatmap using ARCHS4](#gene-heatmap-using-archs4)
+  - [Usage](#usage)
+  - [Dependencies](#dependencies)
+  - [Docker](#docker)
+  - [TODO](#todo)
+  - [Contact](#contact)
+
 # Gene heatmap using ARCHS4
 
 Create a gene heatmap using data from [ARCHS4](https://maayanlab.cloud/archs4/). The example below retrieves the top 100 (default) most correlated gene expression patterns with _TP53_ using `gget` and plots the results in a heatmap.
@@ -62,6 +71,12 @@ docker run --rm -v $(pwd):$(pwd) -w $(pwd) davetang/archs4_heatmap:4.4.1 -p 4 -n
 ```
 
 ![](TNF_top50.png)
+
+## TODO
+
+- [ ] Add option to scale by row or column
+- [ ] Change colour scale for the different systems since it's hard to distinguish Connective Tissue and Immune System
+- [ ] Order samples by system instead of performing hierarchical clustering and add gaps in the heatmap to separate systems
 
 ## Contact
 
