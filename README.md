@@ -55,11 +55,13 @@ A Docker image with all the dependencies has been created.
 docker pull davetang/archs4_heatmap:4.4.1
 ```
 
-Run the example, which will fetch the 100 most correlated genes to TP53 from ARCHS4, and plot the results as a heatmap.
+Fetch the 50 most correlated genes to TNF from ARCHS4, and plot the results as a heatmap.
 
 ```console
-docker run --rm -v $(pwd):$(pwd) -w $(pwd) davetang/archs4_heatmap:4.4.1 -p 4 TP53
+docker run --rm -v $(pwd):$(pwd) -w $(pwd) davetang/archs4_heatmap:4.4.1 -p 4 -n 50 TNF
 ```
+
+![](TNF_top50.png)
 
 ## Contact
 
