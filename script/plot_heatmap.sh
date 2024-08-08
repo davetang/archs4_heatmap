@@ -15,17 +15,19 @@ max_procs=8
 tmp_dir=/tmp
 species=human
 num_genes=100
-version=0.0.2
+version=0.0.3
 keep=0
+cluster_cols=0
 
 usage(){
 >&2 cat << EOF
 Usage: $0
-   [ -p | --max-procs INT (default 8)]
-   [ -t | --tmp-dir STR (default /tmp)]
-   [ -k | --keep keep tmp files]
-   [ -s | --species STR (default human)]
-   [ -n | --num-genes INT (default 100)]
+   [ -p | --max-procs INT (default 8) ]
+   [ -t | --tmp-dir STR (default /tmp) ]
+   [ -k | --keep keep tmp files ]
+   [ -s | --species STR (default human) ]
+   [ -n | --num-genes INT (default 100) ]
+   [ -c | --cluster-cols ]
    [ -v | --version ]
    [ -h | --help ]
    <HGNC gene symbol>
@@ -38,7 +40,7 @@ print_ver(){
    exit 0
 }
 
-args=$(getopt -a -o p:t:ks:n:vh --long max-procs:,tmp-dir:,keep,species:,num-genes:,version,help -- "$@")
+args=$(getopt -a -o p:t:ks:n:vhc --long max-procs:,tmp-dir:,keep,species:,num-genes:,version,help,cluster-cols -- "$@")
 if [[ $? -gt 0 ]]; then
   usage
 fi
@@ -47,13 +49,14 @@ eval set -- ${args}
 while :
 do
   case $1 in
-    -h | --help)      usage        ; shift   ;;
-    -v | --version)   print_ver    ; shift   ;;
-    -k | --keep)      keep=1       ; shift   ;;
-    -p | --max-procs) max_procs=$2 ; shift 2 ;;
-    -s | --species)   species=$2   ; shift 2 ;;
-    -n | --num-genes) num_genes=$2 ; shift 2 ;;
-    -t | --tmp-dir)   tmp_dir=$2   ; shift 2 ;;
+    -h | --help)         usage          ; shift   ;;
+    -v | --version)      print_ver      ; shift   ;;
+    -k | --keep)         keep=1         ; shift   ;;
+    -c | --cluster-cols) cluster_cols=1 ; shift   ;;
+    -p | --max-procs)    max_procs=$2   ; shift 2 ;;
+    -s | --species)      species=$2     ; shift 2 ;;
+    -n | --num-genes)    num_genes=$2   ; shift 2 ;;
+    -t | --tmp-dir)      tmp_dir=$2     ; shift 2 ;;
     --) shift; break ;;
     *) >&2 echo Unsupported option: $1
        usage ;;
@@ -84,7 +87,11 @@ done \
    -P ${max_procs} \
    bash -c "gget archs4 -s ${species} --csv -w tissue {} > ${out_dir}/{}.csv"
 
-${script_dir}/heatmap.R -m ${gene}_top${num_genes}.csv -o ${gene}_top${num_genes}.png ${out_dir}
+if [[ ${cluster_cols} == 1 ]]; then
+   ${script_dir}/heatmap.R --cluster_cols -m ${gene}_top${num_genes}.csv -o ${gene}_top${num_genes}.png ${out_dir}
+else
+   ${script_dir}/heatmap.R -m ${gene}_top${num_genes}.csv -o ${gene}_top${num_genes}.png ${out_dir}
+fi
 
 if [[ ${keep} == 0 ]]; then
    rm -rf ${out_dir}
