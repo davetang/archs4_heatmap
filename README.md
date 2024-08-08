@@ -12,15 +12,15 @@
 Create a gene heatmap using data from [ARCHS4](https://maayanlab.cloud/archs4/). The example below retrieves the top 100 (default) most correlated gene expression patterns with _TP53_ using `gget` and plots the results in a heatmap.
 
 ```console
-./script/plot_heatmap.sh -p 10 TP53
+./script/plot_heatmap.sh -p 6 TP53
 ```
 
 ![](TP53_top100.png)
 
-Top 20 most correlated.
+Top 20 most correlated with column clustering.
 
 ```console
-./script/plot_heatmap.sh -p 10 -n 20 TP53
+./script/plot_heatmap.sh -p 6 -n 20 -c TP53
 ```
 
 ![](TP53_top20.png)
@@ -31,12 +31,15 @@ Run the script without any commands to get the usage.
 
 ```console
 ./script/plot_heatmap.sh
+```
+```
 Usage: ./script/plot_heatmap.sh
-   [ -p | --max-procs INT (default 8)]
-   [ -t | --tmp-dir STR (default /tmp)]
-   [ -k | --keep keep tmp files]
-   [ -s | --species STR (default human)]
-   [ -n | --num-genes INT (default 100)]
+   [ -p | --max-procs INT (default 8) ]
+   [ -t | --tmp-dir STR (default /tmp) ]
+   [ -k | --keep keep tmp files ]
+   [ -s | --species STR (default human) ]
+   [ -n | --num-genes INT (default 100) ]
+   [ -c | --cluster-cols ]
    [ -v | --version ]
    [ -h | --help ]
    <HGNC gene symbol>
@@ -82,7 +85,8 @@ docker run --rm -v $(pwd):$(pwd) -w $(pwd) davetang/archs4_heatmap:4.4.1 -p 6 -k
 
 - [ ] Add option to scale by row or column
 - [ ] Change colour scale for the different systems since it's hard to distinguish Connective Tissue and Immune System
-- [ ] Order samples by system instead of performing hierarchical clustering and add gaps in the heatmap to separate systems
+- [x] Order samples by system instead of performing hierarchical clustering and add gaps in the heatmap to separate systems (added in 0.0.3)
+- [ ] Fix heatmap dimensions, for when n is small
 
 ## Contact
 
