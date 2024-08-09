@@ -15,7 +15,7 @@ max_procs=8
 tmp_dir=/tmp
 species=human
 num_genes=100
-version=0.0.3
+version=$(cat ${script_dir}/.version)
 keep=0
 cluster_cols=0
 
