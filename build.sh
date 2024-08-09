@@ -3,7 +3,7 @@
 set -euo pipefail
 
 image=archs4_heatmap
-ver=$(cat Dockerfile | grep "^FROM" | cut -f2 -d':')
+ver=$(cat script/.version)
 
 docker build -t davetang/${image}:${ver} .
 

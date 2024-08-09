@@ -17,6 +17,6 @@ RUN R -q -e 'install.packages(c("optparse", "pheatmap", "dplyr", "tidyr"))'
 RUN mkdir /opt/bin
 ENV PATH="$PATH:/opt/bin"
 
-COPY script/heatmap.R script/plot_heatmap.sh /opt/bin
+COPY script/heatmap.R script/plot_heatmap.sh script/.version /opt/bin
 
 ENTRYPOINT ["plot_heatmap.sh"]

@@ -64,19 +64,19 @@ install.packages(c("optparse", "pheatmap", "dplyr", "tidyr"))
 A Docker image with all the dependencies has been created.
 
 ```console
-docker pull davetang/archs4_heatmap:4.4.1
+docker pull davetang/archs4_heatmap:0.0.4
 ```
 
 Fetch the 50 most correlated genes to TNF from ARCHS4, and plot the results as a heatmap.
 
 ```console
-docker run --rm -v $(pwd):$(pwd) -w $(pwd) davetang/archs4_heatmap:4.4.1 -p 4 -n 50 TNF
+docker run --rm -v $(pwd):$(pwd) -w $(pwd) davetang/archs4_heatmap:0.0.4 -p 4 -n 50 TNF
 ```
 
 Use `-t` to specify a directory to keep expression data of individual genes.
 
 ```console
-docker run --rm -v $(pwd):$(pwd) -w $(pwd) davetang/archs4_heatmap:4.4.1 -p 6 -k -t $(pwd) CCL2
+docker run --rm -v $(pwd):$(pwd) -w $(pwd) davetang/archs4_heatmap:0.0.4 -p 6 -k -t $(pwd) CCL2
 ```
 
 ![](TNF_top50.png)
@@ -86,7 +86,7 @@ docker run --rm -v $(pwd):$(pwd) -w $(pwd) davetang/archs4_heatmap:4.4.1 -p 6 -k
 - [ ] Add option to scale by row or column
 - [ ] Change colour scale for the different systems since it's hard to distinguish Connective Tissue and Immune System
 - [x] Order samples by system instead of performing hierarchical clustering and add gaps in the heatmap to separate systems (added in 0.0.3)
-- [ ] Fix heatmap dimensions, for when n is small
+- [x] Fix heatmap dimensions, for when n is small (fixed in 0.0.4)
 
 ## Contact
 
