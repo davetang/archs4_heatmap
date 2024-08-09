@@ -4,7 +4,11 @@
 # Year 2023
 #
 
-script_ver <- '0.0.3'
+args <- commandArgs()
+file_arg <- grep("--file", args, value = TRUE)
+script_dir <- dirname(strsplit(file_arg, '=')[[1]][2])
+ver_file <- paste0(script_dir, '/.version')
+script_ver <- readLines(ver_file)
 
 suppressPackageStartupMessages(library(optparse))
 suppressPackageStartupMessages(library(pheatmap))
@@ -86,7 +90,7 @@ my_order <- colnames(my_mat)
 write.csv(my_mat, file = opt$options$matrix, quote = FALSE)
 
 my_df |>
-  dplyr::select(system, organ, tissue) |>
+  dplyr::select(system, tissue) |>
   dplyr::distinct() |>
   dplyr::arrange(match(tissue, my_order)) |>
   dplyr::select(-tissue) -> sample_anno
@@ -105,7 +109,7 @@ if(opt$options$cluster_cols == TRUE){
    p <- pheatmap(my_mat, annotation_col = sample_anno, cluster_cols = FALSE, gaps_col = my_breaks, silent = TRUE)
 }
 
-my_width  <- 700 * sqrt(nrow(my_mat))
+my_width  <- 800 * sqrt(nrow(my_mat))
 my_height <- 400 * sqrt(nrow(my_mat))
 
 save_pheatmap_png <- function(x, filename, width=my_width, height=my_height, res = 300){
