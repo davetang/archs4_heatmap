@@ -73,13 +73,15 @@ Fetch the 50 most correlated genes to TNF from ARCHS4, and plot the results as a
 docker run --rm -v $(pwd):$(pwd) -w $(pwd) davetang/archs4_heatmap:0.0.4 -p 4 -n 50 TNF
 ```
 
+![](TNF_top50.png)
+
 Use `-t` to specify a directory to keep expression data of individual genes.
 
 ```console
 docker run --rm -v $(pwd):$(pwd) -w $(pwd) davetang/archs4_heatmap:0.0.4 -p 6 -k -t $(pwd) CCL2
 ```
 
-![](TNF_top50.png)
+![](CCL2_top100.png)
 
 ## TODO
 
