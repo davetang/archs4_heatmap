@@ -85,6 +85,7 @@ docker run --rm -v $(pwd):$(pwd) -w $(pwd) davetang/archs4_heatmap:0.0.4 -p 6 -k
 
 ## TODO
 
+- [ ] Option to use previously saved results
 - [ ] Add option to scale by row or column
 - [ ] Change colour scale for the different systems since it's hard to distinguish Connective Tissue and Immune System
 - [x] Order samples by system instead of performing hierarchical clustering and add gaps in the heatmap to separate systems (added in 0.0.3)
